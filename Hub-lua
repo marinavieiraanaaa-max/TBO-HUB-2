@@ -1,7 +1,95 @@
-print("TBO HUB carregado com sucesso!")
+--// TBO HUB 2
+--// UI + Loader System
+--// User: yxtx7didf
 
-game.StarterGui:SetCore("SendNotification", {
-    Title = "TBO HUB",
-    Text = "Hub carregado!",
-    Duration = 5
-})
+-- ===== USER LOCK =====
+local allowedUser = "yxtx7didf"
+local plr = game.Players.LocalPlayer
+
+if plr.Name ~= allowedUser then
+    plr:Kick("Acesso negado.")
+    return
+end
+
+-- ===== NOTIFY =====
+pcall(function()
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "TBO HUB",
+        Text = "Hub carregado com sucesso!",
+        Duration = 5
+    })
+end)
+
+-- ===== UI =====
+local gui = Instance.new("ScreenGui")
+gui.Name = "TBO_HUB"
+gui.ResetOnSpawn = false
+gui.Parent = game.CoreGui
+
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0, 300, 0, 260)
+main.Position = UDim2.new(0.5, -150, 0.5, -130)
+main.BackgroundColor3 = Color3.fromRGB(20,20,20)
+main.Active = true
+main.Draggable = true
+
+local corner = Instance.new("UICorner", main)
+corner.CornerRadius = UDim.new(0, 12)
+
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1,0,0,40)
+title.BackgroundTransparency = 1
+title.Text = "TBO HUB 2"
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 20
+
+-- ===== FLAGS =====
+local Aimlock = false
+local Kokusen = false
+
+-- ===== BUTTON MAKER =====
+local function button(txt, y, callback)
+    local b = Instance.new("TextButton", main)
+    b.Size = UDim2.new(1,-30,0,40)
+    b.Position = UDim2.new(0,15,0,y)
+    b.BackgroundColor3 = Color3.fromRGB(35,35,35)
+    b.Text = txt
+    b.TextColor3 = Color3.fromRGB(255,255,255)
+    b.Font = Enum.Font.Gotham
+    b.TextSize = 14
+
+    local c = Instance.new("UICorner", b)
+    c.CornerRadius = UDim.new(0,8)
+
+    b.MouseButton1Click:Connect(function()
+        callback(b)
+    end)
+end
+
+-- ===== BUTTONS =====
+button("Aimlock: OFF", 60, function(b)
+    Aimlock = not Aimlock
+    b.Text = "Aimlock: " .. (Aimlock and "ON" or "OFF")
+end)
+
+button("Kokusen: OFF", 110, function(b)
+    Kokusen = not Kokusen
+    b.Text = "Kokusen: " .. (Kokusen and "ON" or "OFF")
+end)
+
+button("Fechar", 170, function()
+    gui:Destroy()
+end)
+
+-- ===== MAIN LOOP (estrutura) =====
+task.spawn(function()
+    while task.wait(0.25) do
+        if Aimlock then
+            -- lógica entra aqui
+        end
+        if Kokusen then
+            -- lógica entra aqui
+        end
+    end
+end)
