@@ -1,30 +1,87 @@
--- TESTE DEFINITIVO DE UI (Arceus X Neo)
+--// TBO HUB 2 - Arceus X Neo FIX
+--// User: yxtx7didf
 
 repeat task.wait() until game:IsLoaded()
 repeat task.wait() until game.Players.LocalPlayer
 
+-- ===== USER LOCK =====
+local allowedUser = "yxtx7didf"
 local player = game.Players.LocalPlayer
-local parentGui = gethui and gethui() or player:WaitForChild("PlayerGui")
 
+if player.Name ~= allowedUser then
+    player:Kick("Acesso negado.")
+    return
+end
+
+-- ===== NOTIFICATION =====
+pcall(function()
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "TBO HUB",
+        Text = "Hub carregado com sucesso!",
+        Duration = 5
+    })
+end)
+
+-- ===== UI (PlayerGui - compatível com Arceus X Neo) =====
 local gui = Instance.new("ScreenGui")
-gui.Name = "TEST_UI"
+gui.Name = "TBO_HUB"
 gui.ResetOnSpawn = false
-gui.Parent = parentGui
+gui.Parent = player:WaitForChild("PlayerGui")
 
-local frame = Instance.new("Frame")
-frame.Parent = gui
-frame.Size = UDim2.new(0, 300, 0, 200)
-frame.Position = UDim2.new(0.5, -150, 0.5, -100)
-frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-frame.Active = true
-frame.Draggable = true
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0, 300, 0, 260)
+main.Position = UDim2.new(0.5, -150, 0.5, -130)
+main.BackgroundColor3 = Color3.fromRGB(20,20,20)
+main.Active = true
+main.Draggable = true
 
-local text = Instance.new("TextLabel")
-text.Parent = frame
-text.Size = UDim2.new(1, 0, 1, 0)
-text.BackgroundTransparency = 1
-text.Text = "SE VOCÊ ESTÁ VENDO ISSO, A UI FUNCIONA"
-text.TextColor3 = Color3.fromRGB(255,255,255)
-text.TextScaled = true
+local corner = Instance.new("UICorner", main)
+corner.CornerRadius = UDim.new(0, 12)
 
-warn("UI DE TESTE CRIADA")
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1,0,0,40)
+title.BackgroundTransparency = 1
+title.Text = "TBO HUB 2"
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 20
+
+-- ===== FLAGS =====
+local Aimlock = false
+local Kokusen = false
+
+-- ===== BUTTON MAKER =====
+local function button(txt, y, callback)
+    local b = Instance.new("TextButton", main)
+    b.Size = UDim2.new(1,-30,0,40)
+    b.Position = UDim2.new(0,15,0,y)
+    b.BackgroundColor3 = Color3.fromRGB(35,35,35)
+    b.Text = txt
+    b.TextColor3 = Color3.fromRGB(255,255,255)
+    b.Font = Enum.Font.Gotham
+    b.TextSize = 14
+
+    local c = Instance.new("UICorner", b)
+    c.CornerRadius = UDim.new(0,8)
+
+    b.MouseButton1Click:Connect(function()
+        callback(b)
+    end)
+end
+
+-- ===== BUTTONS =====
+button("Aimlock: OFF", 60, function(b)
+    Aimlock = not Aimlock
+    b.Text = "Aimlock: " .. (Aimlock and "ON" or "OFF")
+end)
+
+button("Kokusen: OFF", 110, function(b)
+    Kokusen = not Kokusen
+    b.Text = "Kokusen: " .. (Kokusen and "ON" or "OFF")
+end)
+
+button("Fechar", 170, function()
+    gui:Destroy()
+end)
+
+print("TBO HUB UI criada com sucesso")
