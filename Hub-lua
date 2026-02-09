@@ -1,0 +1,7 @@
+print("TBO HUB carregado com sucesso!")
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "TBO HUB",
+    Text = "Hub carregado!",
+    Duration = 5
+})
