@@ -24,7 +24,9 @@ end)
 local gui = Instance.new("ScreenGui")
 gui.Name = "TBO_HUB"
 gui.ResetOnSpawn = false
-gui.Parent = game.CoreGui
+
+local parentGui = gethui and gethui() or game.Players.LocalPlayer:WaitForChild("PlayerGui")
+gui.Parent = parentGui
 
 local main = Instance.new("Frame", gui)
 main.Size = UDim2.new(0, 300, 0, 260)
@@ -32,17 +34,6 @@ main.Position = UDim2.new(0.5, -150, 0.5, -130)
 main.BackgroundColor3 = Color3.fromRGB(20,20,20)
 main.Active = true
 main.Draggable = true
-
-local corner = Instance.new("UICorner", main)
-corner.CornerRadius = UDim.new(0, 12)
-
-local title = Instance.new("TextLabel", main)
-title.Size = UDim2.new(1,0,0,40)
-title.BackgroundTransparency = 1
-title.Text = "TBO HUB 2"
-title.TextColor3 = Color3.fromRGB(255,255,255)
-title.Font = Enum.Font.GothamBold
-title.TextSize = 20
 
 -- ===== FLAGS =====
 local Aimlock = false
